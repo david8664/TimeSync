@@ -155,7 +155,7 @@ async def main() -> None:
     print(f"✅ Loaded {len(data_list)} records from Excel\n")
 
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+        browser = await playwright.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
         context = await browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36")
         try:
             page = await context.new_page()
@@ -187,6 +187,26 @@ async def main() -> None:
             print("🎉 Done!")
 
         finally:
+            print("\n" + "=" * 60)
+            print("IMPORTANT")
+            print("Please verify that there are no absences or special hours")
+            print("that require manual entry in Synerion, such as:")
+            print("- Vacation")
+            print("- Sick leave")
+            print("- Holiday")
+            print("- Child sick leave")
+            print("- Military reserve duty")
+            print("- Unpaid leave")
+            print("- Bereavement leave")
+            print("- Special absence hours")
+            print("- Overtime categories")
+            print("- Any other attendance exception")
+            print()
+            print("If needed, add them manually before approving")
+            print("your attendance report.")
+            print("=" * 60 + "\n")
+
+            input("Press Enter to close the browser...")
             await browser.close()
 
 
